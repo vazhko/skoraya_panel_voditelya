@@ -56,6 +56,7 @@
       <itemPath>../lib/TimeDelay.c</itemPath>
       <itemPath>../lib/messages.c</itemPath>
       <itemPath>../lib/oss/oss.c</itemPath>
+      <itemPath>../lib/delay.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -115,7 +116,7 @@
       </makeCustomizationType>
       <HI-TECH-COMP>
         <property key="asmlist" value="true"/>
-        <property key="define-macros" value=""/>
+        <property key="define-macros" value="USE_RS485"/>
         <property key="extra-include-directories"
                   value="..;..\..;..\lib\include;..\lib\mTouchCap\include;..\lib\oss;C:\Program Files (x86)\Microchip\xc8\v1.33\include;."/>
         <property key="identifier-length" value="255"/>
@@ -180,7 +181,7 @@
         <property key="program-the-device-with-default-config-words" value="false"/>
       </HI-TECH-LINK>
       <PICkit3PlatformTool>
-        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="AutoSelectMemRanges" value="manual"/>
         <property key="Freeze Peripherals" value="true"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="ToolFirmwareFilePath"
@@ -192,7 +193,7 @@
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.configurationmemory2" value="true"/>
         <property key="memories.dataflash" value="true"/>
-        <property key="memories.eeprom" value="true"/>
+        <property key="memories.eeprom" value="false"/>
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
         <property key="memories.instruction.ram" value="true"/>

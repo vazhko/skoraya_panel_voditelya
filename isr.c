@@ -104,8 +104,13 @@ void interrupt low_priority LO_ISR(void) {
                 if ((in_packet[i] != '>')) goto error;                
             }
             if (i == 1) {
-                if ((in_packet[i] != 'V')) goto error;                
+                if ((in_packet[i] != 'V')) goto error;  
+                Nop();
+                Nop();
             }
+            Nop();
+            Nop();
+            
         }
         //*/
         

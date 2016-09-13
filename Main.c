@@ -183,7 +183,7 @@ void tsk_rx(void){
             
             
             //>Vom@B1=1 B2=1 B3=1 B4=1$
-            sprintf(out_packet, "Vom@B1=%u B2=%u B3=%u B4=%u$\r",
+            sprintf(out_packet, ">Bom@B1=%u B2=%u B3=%u B4=%u$\r",
                     stat.st_btn1, stat.st_btn2, stat.st_btn3, stat.st_btn4);
 
             // ответ
@@ -201,6 +201,7 @@ void tsk_rx(void){
             } else {
                 stat.batt_k = 0;
             }
+            // 220В включается нулем
             if(in_packet[32] == '0'){
                 stat.HV_k = 1;
             } else {
