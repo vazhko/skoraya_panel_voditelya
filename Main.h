@@ -28,11 +28,12 @@ $Id: Main.h 202 2012-08-09 14:17:18Z Vlad $
 #include "modbus_RTU.h"
 #include "sub18.h"
 #include "macro.h"
-#include "PCD8544.h"
 
+#include "PCD8544.h"
+#include "text.h"
 
 /***************************************************************************/
-#define VER "v.1.0"
+#define VER "v.1."
 
 #define RS232_ADR	0x55
 #define SOUND_ON

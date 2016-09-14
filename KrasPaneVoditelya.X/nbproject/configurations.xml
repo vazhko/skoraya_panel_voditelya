@@ -27,8 +27,8 @@
       <itemPath>../lib/include/GenericTypeDefs.h</itemPath>
       <itemPath>../lib/include/messages.h</itemPath>
       <itemPath>../MessagesConfig.h</itemPath>
-      <itemPath>../PCD8544.c</itemPath>
-      <itemPath>../PCD8544.h</itemPath>
+      <itemPath>../lib/include/PCD8544.h</itemPath>
+      <itemPath>../lib/include/text.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -57,6 +57,8 @@
       <itemPath>../lib/messages.c</itemPath>
       <itemPath>../lib/oss/oss.c</itemPath>
       <itemPath>../lib/delay.c</itemPath>
+      <itemPath>../lib/PCD8544.c</itemPath>
+      <itemPath>../lib/text.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -209,7 +211,7 @@
         <property key="memories.programmemory.partition2.start"
                   value="${memories.programmemory.partition2.start.value}"/>
         <property key="memories.programmemory.start" value="0x0"/>
-        <property key="poweroptions.powerenable" value="true"/>
+        <property key="poweroptions.powerenable" value="false"/>
         <property key="programmertogo.imagename" value=""/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>

@@ -43,6 +43,18 @@ void main(void){
     InitializeSystem();
     pcd8544_init();
     
+    
+    pcd8544_clear();
+    /*
+    text_set_font(FONT_BOLD);
+    text_print(0, 0, "PCD8544", 0);
+    text_set_font(FONT_NORMAL);
+    text_print(2, 0, "dsfgfdsg", 0);
+    text_print(3, 0, "dsfgfdg", 0);
+    text_set_font(FONT_HANDWRITE);
+    text_print(5, 0, "zdfgdfasg", 0);
+    */
+    
     Nop();
     Nop();
 
