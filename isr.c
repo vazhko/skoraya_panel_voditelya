@@ -82,6 +82,7 @@ void interrupt high_priority HI_ISR(void) {
 /****************************************************************************/
 
 //52
+
 const char in_packet_template[] = ">Vodi@V1=00.0 V2=00.0 Con=0 220=0 LRi=0 LRe=0 Fus=0$\r";
 
 extern char out_packet[];
@@ -97,7 +98,7 @@ void interrupt low_priority LO_ISR(void) {
 
     if (RCIF && RCIE) {
         ///*
-        for (i = 0; i < sizeof (in_packet_template); i++) {
+        for (i = 0; i < ARRAYSIZE (in_packet_template); i++) {
             in_packet[i] = timed_getc();
             if ((FERR) || (OERR) || timeout_error) goto error;
             if (i == 0) {

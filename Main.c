@@ -32,9 +32,8 @@ status_t stat;
 
 
 char str[40];
-char out_packet[27] ; // ">Vom@B1=1 B2=1 B3=1 B4=1$\r";
-char in_packet[54];// = ">Vodi@V1=00.0 V2=00.0 Con=0 220=0 LRi=0 LRe=0 Fus=0$\r";
-
+char out_packet[27]; // ">Vom@B1=1 B2=1 B3=1 B4=1$\r";
+char in_packet[54]; // = ">Vodi@V1=00.0 V2=00.0 Con=0 220=0 LRi=0 LRe=0 Fus=0$\r";
 
 void main(void){
 
@@ -42,26 +41,27 @@ void main(void){
     InitMessages();
     InitializeSystem();
     pcd8544_init();
-    
-    
+
+
     pcd8544_clear();
     /*
-    text_set_font(FONT_BOLD);
-    text_print(0, 0, "PCD8544", 0);
-    text_set_font(FONT_NORMAL);
-    text_print(2, 0, "dsfgfdsg", 0);
-    text_print(3, 0, "dsfgfdg", 0);
-    text_set_font(FONT_HANDWRITE);
-    text_print(5, 0, "zdfgdfasg", 0);
-    */
-    
+        text_set_font(FONT_BOLD);
+        text_char(0, 0, 'U', 0);
+        text_print(0, 0, "PCD8544", 0);
+        text_set_font(FONT_NORMAL);
+        text_print(2, 0, "dsfgfdsg", 0);
+        text_print(3, 0, "dsfgfdg", 0);
+        text_set_font(FONT_HANDWRITE);
+        text_print(5, 0, "zdfgdfasg", 0);
+     */
+
     Nop();
     Nop();
 
 
     //INTCONbits.GIE = 1;
 
-    Beep(10);
+    //Beep(10);
 
 
 
@@ -145,6 +145,7 @@ void tsk_process_btn(void){
 
 /******************************************************************************************/
 void tsk_display(void){
+    char str[30];
 
     OS_TaskInit();
 
@@ -154,11 +155,73 @@ void tsk_display(void){
     OS_Delay(500);
     //blink ++;
 
-
-
-
-
+    text_set_font(FONT_BOLD);
+    sprintf(str, "%2.1fB OCHOBH.", stat.U1);
+    text_print(3, 0, (const char*)str, 0);
     OS_Yield();
+
+    //ДОДАТК.
+    sprintf(str, "%2.1fB %cO%cATK.", stat.U2, 132, 132);
+    text_print(4, 0, (const char*)str, 0);
+    OS_Yield();
+
+    
+    
+    if(stat.batt_k){    
+        // ЗАРЯД  
+        sprintf(str, "%cAP%c%c", 135, 159, 132);
+        text_print(5, 40, (const char*)str, 0);
+    } else {
+        sprintf(str, "                    ");
+        text_print(5, 40, (const char*)str, 0);
+    }
+    OS_Yield();
+    
+    
+    if(stat.HV_k){
+        sprintf(str, "220B");
+        text_print(5, 0, (const char*)str, 0);
+    } else {
+        sprintf(str, "                  ");
+        text_print(5, 0, (const char*)str, 0);
+    }
+    OS_Yield();  
+    
+//*    
+    if(stat.side == 0){
+        sprintf(str, "%cA%cH.", 135, 132);
+        text_print(0, 0, (const char*)str, 0);
+    } else {
+        sprintf(str, "                  ");
+        text_print(0, 0, (const char*)str, 0);
+    }
+    OS_Yield();
+    
+    if(stat.back == 0){
+        sprintf(str, "%cOK.", 129);
+        text_print(0, 50, (const char*)str, 0);
+    } else {
+        sprintf(str, "                  ");
+        text_print(0, 50, (const char*)str, 0);
+    }
+    OS_Yield();
+  //*/  
+    
+     if(stat.st_fuse){
+        sprintf(str, "%cPE%cOXPAH.", 143, 132);
+        text_print(2, 0, (const char*)str, 0);
+    } else {
+        sprintf(str, "                                     ");
+        text_print(2, 0, (const char*)str, 0);
+    }
+    OS_Yield();   
+    
+ 
+    
+    
+    
+
+
 
 
 #ifdef SHOW_PACKETS
@@ -188,58 +251,58 @@ void tsk_display(void){
 
 /******************************************************************************************/
 void tsk_rx(void){
-  
-        if(GetMessage(MES_RX)){
-            Nop();
-            Nop();
-            
-            
-            //>Vom@B1=1 B2=1 B3=1 B4=1$
-            sprintf(out_packet, ">Bom@B1=%u B2=%u B3=%u B4=%u$\r",
-                    stat.st_btn1, stat.st_btn2, stat.st_btn3, stat.st_btn4);
 
-            // ответ
-            putstrc(out_packet);
-
-            // расшифровка
-            sprintf(str, "%c%c.%c", in_packet[9], in_packet[10], in_packet[12]);
-            stat.U1 = atof(str);
-            sprintf(str, "%c%c.%c", in_packet[17], in_packet[18], in_packet[20]);
-            stat.U2 = atof(str);
+    if(GetMessage(MES_RX)){
+        Nop();
+        Nop();
 
 
-            if(in_packet[26] == '1'){
-                stat.batt_k = 1;
-            } else {
-                stat.batt_k = 0;
-            }
-            // 220В включается нулем
-            if(in_packet[32] == '0'){
-                stat.HV_k = 1;
-            } else {
-                stat.HV_k = 0;
-            }
-            if(in_packet[38] == '1'){
-                stat.side = 1;
-            } else {
-                stat.side = 0;
-            }
-            if(in_packet[44] == '1'){
-                stat.back = 1;
-            } else {
-                stat.back = 0;
-            }
-            if(in_packet[50] == '1'){
-                stat.st_fuse = 1;
-            } else {
-                stat.st_fuse = 0;
-            }
-            
-            stat.st_btn1 = 0;
-            stat.st_btn2 = 0;
-            stat.st_btn3 = 0;
-            stat.st_btn4 = 0;
+        //>Vom@B1=1 B2=1 B3=1 B4=1$
+        sprintf(out_packet, ">Bom@B1=%u B2=%u B3=%u B4=%u$\r",
+                stat.st_btn1, stat.st_btn2, stat.st_btn3, stat.st_btn4);
+
+        // ответ
+        putstrc(out_packet);
+
+        // расшифровка
+        sprintf(str, "%c%c.%c", in_packet[9], in_packet[10], in_packet[12]);
+        stat.U1 = atof(str);
+        sprintf(str, "%c%c.%c", in_packet[17], in_packet[18], in_packet[20]);
+        stat.U2 = atof(str);
+
+
+        if(in_packet[26] == '1'){
+            stat.batt_k = 1;
+        } else {
+            stat.batt_k = 0;
         }
+        // 220В включается нулем
+        if(in_packet[32] == '0'){
+            stat.HV_k = 1;
+        } else {
+            stat.HV_k = 0;
+        }
+        if(in_packet[38] == '1'){
+            stat.side = 1;
+        } else {
+            stat.side = 0;
+        }
+        if(in_packet[44] == '1'){
+            stat.back = 1;
+        } else {
+            stat.back = 0;
+        }
+        if(in_packet[50] == '1'){
+            stat.st_fuse = 1;
+        } else {
+            stat.st_fuse = 0;
+        }
+
+        stat.st_btn1 = 0;
+        stat.st_btn2 = 0;
+        stat.st_btn3 = 0;
+        stat.st_btn4 = 0;
+    }
 
 
 }

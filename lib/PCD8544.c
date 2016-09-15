@@ -78,7 +78,7 @@ void pcd8544_clear(void){
     pcd8544_setpos(0, 0);
     for(y = 0; y < 6; y ++){
         for(x = 0; x < 84; x ++){
-            pcd8544_data(0x00);
+            pcd8544_data(0);
         }
     }
     pcd8544_setpos(0, 0);

@@ -70,10 +70,10 @@ void InitializeSystem(void){
     MTouchSetSensor(3, CH3_TRIS, CH3_LAT, CH3_IO_BIT, CH3_AN_NUM, - 1, - 1, - 1);
 
 
-    MTouchSetButton(KEY_1, 3, DECODE_ONE_EVENT);
-    MTouchSetButton(KEY_2, 1, DECODE_ONE_EVENT);
-    MTouchSetButton(KEY_3, 2, DECODE_ONE_EVENT);
-    MTouchSetButton(KEY_4, 0, DECODE_ONE_EVENT);
+    MTouchSetButton(KEY_1, 0, DECODE_ONE_EVENT);
+    MTouchSetButton(KEY_2, 2, DECODE_ONE_EVENT);
+    MTouchSetButton(KEY_3, 3, DECODE_ONE_EVENT);
+    MTouchSetButton(KEY_4, 1, DECODE_ONE_EVENT);
 
 
 

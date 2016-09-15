@@ -15,6 +15,8 @@
 #define DISPLAY_PAGES 6
 #define DISPLAY_HEIGHT (DISPLAY_PAGES * 8)
 
+#define ARRAYSIZE(array) (sizeof(array) / sizeof(array[0]))
+
 
 void pcd8544_send_byte(BYTE data);
 void pcd8544_data(BYTE data);
